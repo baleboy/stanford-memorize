@@ -26,6 +26,10 @@ class EmojiMemoryGame: ObservableObject {
         game.cards
     }
     
+    func choose(_ card: MemoryGame<String>.Card) {
+        game.choose(card)
+    }
+    
     func shuffle() {
         game.shuffle()
     }
