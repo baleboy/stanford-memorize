@@ -18,8 +18,14 @@ struct ContentView: View {
                 cards
                     .animation(.default, value: game.cards)
             }
-            Button("Shuffle") {
-                game.shuffle()
+            if !game.isGameOver {
+                Button("Shuffle") {
+                    game.shuffle()
+                }
+            } else {
+                Button("Reset") {
+                    game.reset()
+                }
             }
         }
         .padding()
