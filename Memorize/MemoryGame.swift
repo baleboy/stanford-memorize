@@ -20,28 +20,25 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
-    private var indexOfcurrentlyTurnedUpCard: Int?
+    private var indexOfSingleTurnedUpCard: Int?
     
     mutating func choose(_ card: Card) {
         if let chosenIndex = cards.firstIndex(where: {$0.id == card.id}) {
             if !cards[chosenIndex].isFaceUp && !cards[chosenIndex].isMatched {
-                cards[chosenIndex].isFaceUp = true
-                if let turned = indexOfcurrentlyTurnedUpCard {
+                if let turned = indexOfSingleTurnedUpCard {
+                    indexOfSingleTurnedUpCard = nil
                     if cards[turned].content == cards[chosenIndex].content {
                         cards[chosenIndex].isMatched = true
                         cards[turned].isMatched = true
-                        indexOfcurrentlyTurnedUpCard = nil
-                    } else {
-                        cards[turned].isFaceUp = false
-                        cards[chosenIndex].isFaceUp = true
-                        indexOfcurrentlyTurnedUpCard = chosenIndex
                     }
                 } else {
-                    cards[chosenIndex].isFaceUp = true
-                    indexOfcurrentlyTurnedUpCard = chosenIndex
+                    for i in cards.indices {
+                        cards[i].isFaceUp = false
+                    }
+                    indexOfSingleTurnedUpCard = chosenIndex
                 }
+                cards[chosenIndex].isFaceUp = true
             }
-
         }
     }
     

@@ -60,6 +60,7 @@ struct CardView: View {
             }.opacity(card.isFaceUp ? 1 : 0)
             base.fill(.orange).opacity(card.isFaceUp ? 0 : 1)
         }
+        .opacity(card.isMatched ? 0 : 1)
     }
 }
     
