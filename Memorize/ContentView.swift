@@ -30,7 +30,7 @@ struct ContentView: View {
     }
 
     var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 90))]) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
             ForEach(game.cards) { card in
                 CardView(card)
                     .aspectRatio(2 / 3, contentMode: .fit)
