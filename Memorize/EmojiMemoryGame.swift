@@ -33,4 +33,12 @@ class EmojiMemoryGame: ObservableObject {
     func shuffle() {
         game.shuffle()
     }
+    
+    func reset() {
+        game.reset()
+    }
+    
+    var isGameOver: Bool {
+        game.isGameOver
+    }
 }

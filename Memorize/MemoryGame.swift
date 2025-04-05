@@ -21,6 +21,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         cards.shuffle()
     }
     
+
+    
     private var indexOfSingleTurnedUpCard: Int?
     
     mutating func choose(_ card: Card) {
@@ -43,6 +45,18 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     mutating func shuffle() {
         cards.shuffle()
+    }
+    
+    mutating func reset() {
+        cards.indices.forEach {
+            cards[$0].isMatched = false
+            cards[$0].isFaceUp = false
+        }
+        cards.shuffle()
+    }
+    
+    var isGameOver: Bool {
+        cards.allSatisfy(\.isMatched)
     }
     
     struct Card: Equatable, Identifiable {
