@@ -20,9 +20,28 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
+    private var indexOfcurrentlyTurnedUpCard: Int?
+    
     mutating func choose(_ card: Card) {
-        if let index = cards.firstIndex(where: {$0.id == card.id}) {
-            cards[index].isFaceUp.toggle()
+        if let chosenIndex = cards.firstIndex(where: {$0.id == card.id}) {
+            if !cards[chosenIndex].isFaceUp && !cards[chosenIndex].isMatched {
+                cards[chosenIndex].isFaceUp = true
+                if let turned = indexOfcurrentlyTurnedUpCard {
+                    if cards[turned].content == cards[chosenIndex].content {
+                        cards[chosenIndex].isMatched = true
+                        cards[turned].isMatched = true
+                        indexOfcurrentlyTurnedUpCard = nil
+                    } else {
+                        cards[turned].isFaceUp = false
+                        cards[chosenIndex].isFaceUp = true
+                        indexOfcurrentlyTurnedUpCard = chosenIndex
+                    }
+                } else {
+                    cards[chosenIndex].isFaceUp = true
+                    indexOfcurrentlyTurnedUpCard = chosenIndex
+                }
+            }
+
         }
     }
     
@@ -33,7 +52,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     struct Card: Equatable, Identifiable {
         let id: UUID = UUID()
         var content: CardContent
-        var isFaceUp: Bool = true
+        var isFaceUp: Bool = false
         var isMatched: Bool = false
     }
 }
